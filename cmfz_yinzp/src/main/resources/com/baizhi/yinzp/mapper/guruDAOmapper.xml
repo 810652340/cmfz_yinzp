@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yinzp.dao.GuruDAO">
+	<!--展示所有图片-->
+	<select id="queryAll" resultType="guru">
+		SELECT * FROM t_guru
+	</select>
+	<!--修改图片的状态-->
+	<update id="update" parameterType="guru">
+		UPDATE t_guru SET status=#{status} where id=#{id}
+	</update>
+	<!--添加一个上师-->
+	<insert id="save" parameterType="guru">
+		INSERT INTO t_guru VALUES(#{id},#{headpic},#{name},#{status})
+	</insert>
+	<!--查看该上师所有的文章-->
+	<select id="queryAllone" resultType="guru">
+	 	SELECT * FROM t_guru
+	</select>
+</mapper>

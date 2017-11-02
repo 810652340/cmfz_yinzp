@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yinzp.dao.AlbumDAO">
+	<resultMap id="albumMap" type="album">
+		<id column="id" property="id"></id>
+		<result column="newName" property="newName" />
+		<result column="oldName" property="oldName" />
+		<result column="thumbnail" property="thumbnail" />
+		<result column="title" property="title" />
+		<result column="setCount" property="setCount" />
+		<result column="createDate" property="createDate" />
+		<result column="score" property="score" />
+		<result column="author" property="author" />
+		<result column="broadcast" property="broadcast" />
+		<result column="brief" property="brief" />
+		<result column="status" property="status" />
+		<collection property="children" javaType="list" ofType="chapter">
+			<id column="cid" property="id" />
+			<result column="ctitle" property="title" />
+			<result column="cdownloadUrl" property="downloadUrl" />
+			<result column="csize" property="size" />
+			<result column="cduration" property="duration" />
+			<result column="cnewName" property="newName" />
+			<result column="coldName" property="oldName" />
+			<result column="calbumId" property="albumId" />
+			<result column="cstatus" property="status" />
+		</collection>
+	</resultMap>
+	<!--查询所有专辑-->
+	<select id="queryAll" resultMap="albumMap">
+		SELECT a.id,a.newName,a.oldName,a.thumbnail,a.title,a.setCount,a.createDate,a.score,a.author,a.broadcast,a.brief,a.status,
+			   c.id as cid,c.title as ctitle,c.downloadUrl as cdownloadUrl,c.size as csize,c.duration as cduration,c.newName as cnewName,c.oldName as coldName,c.albumId as calbumId,c.status as cstatus
+		FROM t_album a
+		LEFT JOIN t_chapter c
+		on c.albumId =a.id
+		WHERE a.zid is null
+	</select>
+	<insert id="save" parameterType="album">
+		INSERT INTO t_album VALUES(#{id},#{newName},#{oldName},#{thumbnail},#{title},#{setCount},#{createDate},#{score},#{author},#{broadcast},#{brief},#{status},null)
+	</insert>
+</mapper>

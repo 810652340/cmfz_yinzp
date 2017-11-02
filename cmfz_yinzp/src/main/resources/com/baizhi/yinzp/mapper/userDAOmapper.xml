@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yinzp.dao.UserDAO">
+	<resultMap id="map" type="user">
+		<id column="id" property="id"></id>
+		<result column="password" property="password"></result>
+		<result column="farmington" property="farmington"></result>
+		<result column="nickname" property="nickname"></result>
+		<result column="gender" property="gender"></result>
+		<result column="photo" property="photo"></result>
+		<result column="location" property="location"></result>
+		<result column="province" property="province"></result>
+		<result column="city" property="city"></result>
+		<result column="description" property="description"></result>
+		<result column="status" property="status"></result>
+		<result column="guruid" property="guruid"></result>
+		<result column="phone" property="phone"></result>
+		<association property="children" javaType="guru">
+			<id column="gid" property="id"></id>
+			<result column="headpic" property="headpic"></result>
+			<result column="name" property="name"></result>
+			<result column="status" property="status"></result>
+		</association>
+	</resultMap>
+	<select id="queryAll" resultMap="map">
+		SELECT u.id,u.password,u.farmington,u.nickname,u.gender,u.photo,u.location,u.province,u.city,u.description,u.status,u.guruid,u.phone,
+			  g.id as gid,g.headpic,g.name,g.status as gstatus
+		FROM t_user u
+		LEFT JOIN t_guru g
+		ON u.guruid=g.id
+	</select>
+	<!--查询一周的活跃量-->
+	<select id="queryAc" resultType="Integer">
+			SELECT COUNT(*)FROM t_user WHERE to_days(now())-to_days(createDate) &lt; #{num}
+	</select>
+	<!--查看用户的分布-->
+	<select id="queryCity" resultType="cityFB">
+		SELECT COUNT(*) as value,province as name FROM t_user GROUP BY(province)
+	</select>
+	<!--修改用户的状态-->
+	<update id="update" parameterType="user">
+		UPDATE t_user SET status=#{status} where id = #{id}
+	</update>
+</mapper>

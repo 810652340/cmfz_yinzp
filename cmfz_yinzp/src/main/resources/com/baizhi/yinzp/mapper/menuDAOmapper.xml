@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yinzp.dao.MenuDAO">
+	<resultMap id="menumapper" type="menu">
+		<id property="id" column="id"></id>
+		<result column="title" property="title"></result>
+		<result column="iconCls" property="iconCls"></result>
+		<result column="selected" property="selected"></result>
+		<result column="childrenId" property="childrenId"></result>
+		<result column="href" property="href"></result>
+		<collection property="children" javaType="list" ofType="menu">
+			<id column="mid" property="id"></id>
+			<result column="mtitle" property="title"></result>
+			<result column="miconCls" property="iconCls"></result>
+			<result column="mselected" property="selected"></result>
+			<result column="mchildrenId" property="childrenId"></result>
+			<result column="mhref" property="href"></result>
+		</collection>
+	</resultMap>
+
+	<select id="queryAll" resultMap="menumapper">
+		SELECT t.id,t.title,t.iconCls,t.selected,t.childrenId,t.href,
+			   m.id as mid,m.title as mtitle,m.iconCls as miconCls,m.selected as mselected,m.childrenId as mchildrenId,m.href as mhref
+		FROM t_menu t
+		LEFT JOIN t_menu m
+		ON t.id = m.childrenId
+		WHERE t.childrenId IS NULL
+	</select>
+
+</mapper>

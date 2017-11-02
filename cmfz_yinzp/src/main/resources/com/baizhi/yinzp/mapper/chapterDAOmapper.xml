@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yinzp.dao.ChapterDAO">
+	<!--删除所有数据-->
+	<delete id="delAll">
+		DELETE FROM t_chapter
+	</delete>
+	<!--修改状态-->
+	<update id="update" parameterType="chapter">
+		UPDATE t_chapter SET status=#{status} where id=#{id}
+	</update>
+	<!--添加一个音频文件-->
+	<insert id="save" parameterType="chapter">
+		INSERT INTO t_chapter VALUES(#{id},#{title},#{downloadUrl},#{size},#{duration},#{newName},#{oldName},#{albumId},#{status})
+	</insert>
+</mapper>

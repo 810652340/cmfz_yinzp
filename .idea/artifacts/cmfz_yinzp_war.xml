@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cmfz_yinzp:war">
+    <output-path>$PROJECT_DIR$/cmfz_yinzp/target</output-path>
+    <root id="archive" name="cmfz_yinzp.war">
+      <element id="artifact" artifact-name="cmfz_yinzp:war exploded" />
+    </root>
+  </artifact>
+</component>

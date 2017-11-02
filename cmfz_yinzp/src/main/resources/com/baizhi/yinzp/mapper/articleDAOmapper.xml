@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yinzp.dao.ArticleDAO">
+    <resultMap id="gurumap" type="article">
+        <id column="aid" property="id"></id>
+        <result column="atitle" property="title"></result>
+        <result column="createDate" property="createDate"></result>
+        <result column="link" property="link"></result>
+        <result column="ext" property="ext"></result>
+        <result column="texts" property="texts"></result>
+        <result column="illustration" property="illustration"></result>
+        <result column="guruid" property="guruid"></result>
+        <result column="astatus" property="status"></result>
+        <association property="children" javaType="guru" >
+            <id column="id" property="id"></id>
+            <result column="headpic" property="headpic"></result>
+            <result column="name" property="name"></result>
+            <result column="status" property="status"></result>
+        </association>
+    </resultMap>
+    <select id="queryAll" resultMap="gurumap">
+        SELECT g.id,g.headpic,g.name,g.status,
+			   a.id as aid,a.title as atitle,a.createDate,a.link,a.ext,a.texts,a.illustration,a.guruid,a.status as astatus
+		FROM t_article a
+        LEFT JOIN t_guru g
+        ON a.guruid=g.id
+    </select>
+    <insert id="save" parameterType="article">
+        INSERT INTO t_article VALUES(#{id},#{title},#{createDate},#{link},#{ext},#{texts},#{illustration},#{guruid},#{status})
+    </insert>
+    <update id="update" parameterType="article">
+        UPDATE t_article SET status=#{status} where id=#{id}
+    </update>
+</mapper>

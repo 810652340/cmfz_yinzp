@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yinzp.dao.LogDAO">
+	<select id="queryAll" resultType="log">
+		SELECT * FROM t_log ORDER BY date DESC
+	</select>
+	<insert id="save" parameterType="log">
+		INSERT INTO t_log VALUES(#{id},#{username},#{date},#{doSomething},#{status})
+	</insert>
+</mapper>
